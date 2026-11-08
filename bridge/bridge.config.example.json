@@ -1,0 +1,18 @@
+{
+  "_comment": "复制成 bridge.config.json 再改。这个文件里有 token，不要提交到仓库。",
+  "wsUrl": "ws://127.0.0.1:3004?access_token=CHANGE_ME",
+  "me": 10001,
+  "owner": 20002,
+  "peers": {
+    "30003": "同事A",
+    "40004": "同事B",
+    "50005": "同事C"
+  },
+  "accounts": {
+    "10001": "ws://127.0.0.1:3004?access_token=CHANGE_ME",
+    "50005": "ws://127.0.0.1:3005?access_token=CHANGE_ME"
+  },
+  "askDefaultTo": 30003,
+  "idleMinutes": 5,
+  "wakeNames": ["助手", "ham"]
+}

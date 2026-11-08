@@ -1,0 +1,101 @@
+diff --git a/client/client.js b/client/client.js
+index 801e8fb..c92269a 100644
+--- a/client/client.js
++++ b/client/client.js
+@@ -1376,18 +1376,17 @@ body[data-ds-dark-theme] .ab-root,.ab-root.ab-dark{--ab-shadow:0 1px 2px rgba(0,
+         h(Card, { title: '主人', desc: '主人的 QQ 号。群管、点歌、电脑上的操作只听主人的。' },
+           h(Row, { label: '主人 QQ 号' }, f.text('ownerQQ')),
+           h(Row, { label: 'ta怎么称呼你' }, f.text('ownerName', { placeholder: '主人' })),
+-          h(Row, { label: '主人私聊的权限', hint: '群聊永远没有电脑操作权限，这里管不到群。' },
++          h(Row, { label: '主人私聊的权限', hint: '群聊永远没有电脑操作权限，这里管不到群。只有两档：能指挥干活 / 只能聊天。' },
+             h('div', { style: { width: '100%' } },
+               h(Choices, { value: draft.ownerLevel, onChange: (v) => setDraft(setPath(draft, 'ownerLevel', v)), options: [
+-                { value: 'full', label: '完整', desc: '私聊里让ta用电脑做事（查文件、跑命令、上网查）也能做' },
+-                { value: 'social', label: '受限', desc: '只有发表情、发说说这类 QQ 工具，碰不到电脑' },
+-                { value: 'chat', label: '纯聊天', desc: '什么工具都没有，只聊天' },
++                { value: 'full', label: '能指挥干活', desc: '能让ta用这台电脑做事：查文件、跑命令、改代码、收发文件' },
++                { value: 'social', label: '只能聊天', desc: '只有发表情、发说说这类 QQ 工具，碰不到电脑' },
+               ] }),
+               h('div', { className: 'ab-muted ab-small', style: { marginTop: 8 } }, '切换后会给主人私聊换一个新的 DSH 会话（旧的还在侧栏里）。'))),
+           h(Row, { label: 'DSH 要授权时发到 QQ', hint: '人不在电脑前也知道ta卡住了。' }, f.sw('approvalNotify')),
+           h(Row, { label: 'QQ 接口', hint: '让她用 QQ 的其他能力：别人只能查当前群的公告、精华这些；撤回、设精华、改群名片等只听你的。取 Cookie、发原始包、删好友、退群这些不开放。' }, f.sw('qqApi.enabled')),
+           h(Row, { label: '在 QQ 里批准', hint: '和你私聊时要授权，回复「确认」批准这一次、回复「取消」拒绝，5 分钟没回就不批。只认你本人的私聊回复，DSH 里也能同时点。QQ 号被盗的话，对方也能批，介意就关掉' }, f.sw('approvalViaQQ')),
+-          h(Row, { label: '长任务模式', hint: '只在「完整」权限下生效。打开后ta能把命令放到后台跑、跑完自动回来告诉你，也能设定时任务；工具多一点，回话会稍慢。切换后同样换新会话。' },
++          h(Row, { label: '长任务模式', hint: '只在「能指挥干活」权限下生效。打开后ta能把命令放到后台跑、跑完自动回来告诉你，也能设定时任务；工具多一点，回话会稍慢。切换后同样换新会话。' },
+             h(Choices, { value: draft.longTasks ? 'on' : 'off', onChange: (v) => setDraft(setPath(draft, 'longTasks', v === 'on')), options: [
+               { value: 'off', label: '关', desc: '工具少一点，回话快一点' },
+               { value: 'on', label: '开', desc: '干长活时能接着聊（默认）' },
+@@ -1401,6 +1400,11 @@ body[data-ds-dark-theme] .ab-root,.ab-root.ab-dark{--ab-shadow:0 1px 2px rgba(0,
+         h(ProfilePerms, { st, draft, setDraft }),
+         h(Card, { title: '白名单', desc: '只有名单里的人和群，ta才会理。一行一个号码。' },
+           h(Row, { label: '私聊白名单', hint: '主人默认就在里面。' }, f.list('allow.private', { placeholder: '每行一个 QQ 号', numbers: true })),
++          h(Row, { label: '白名单的权限', hint: '白名单里这些人私聊时的档位，和主人同一套两档。给「能指挥干活」等于把这台电脑的命令行交给他们。' },
++            h(Choices, { value: draft.whitelistLevel, onChange: (v) => setDraft(setPath(draft, 'whitelistLevel', v)), options: [
++              { value: 'full', label: '能指挥干活', desc: '他们私聊也能让你用电脑做事' },
++              { value: 'social', label: '只能聊天', desc: '只聊天，碰不到电脑（推荐）' },
++            ] })),
+           h(Row, { label: '群白名单', hint: '把机器人拉进群后，把群号加到这里。' }, f.list('allow.groups', { placeholder: '每行一个群号', numbers: true })),
+         ),
+         modOn(st, 'group-admin') ? h(GroupRoles, null) : null,
+@@ -5044,7 +5048,7 @@ body[data-ds-dark-theme] .ab-root,.ab-root.ab-dark{--ab-shadow:0 1px 2px rgba(0,
+         stickers: Stickers, imagegen: ImageGen, diary: Diary, speakup: SpeakUp, pet: PetPanel, mood: Mood, persona: PersonaMemory, song: Song, bili: Bili, douyin: Douyin, heybox: Heybox, local: LocalApi, security: Security, market: Market, modules: Modules, logs: Logs, about: About, backup: Backup,
+       }[curTab.id] || Overview
+       // 哪些标签有没保存的改动
+-      const TAB_KEYS = { connect: ['snowluma', 'botQQ'], access: ['ownerQQ', 'ownerName', 'ownerLevel', 'approvalNotify', 'approvalViaQQ', 'qqApi', 'longTasks', 'profilePerms', 'allow'], group: ['group', 'merge', 'titleFilter', 'chat'], model: ['model', 'chatModels'], voice: ['voice'], stickers: ['stickers'], imagegen: ['imageGen'], diary: ['diary', 'qzoneSocial'], speakup: ['speakUp'], pet: [], mood: ['mood', 'memory'], song: ['song'], bili: ['bili'], douyin: ['douyin'], heybox: ['heybox'], local: ['local'], security: ['security', 'update'] }
++      const TAB_KEYS = { connect: ['snowluma', 'botQQ'], access: ['ownerQQ', 'ownerName', 'ownerLevel', 'whitelistLevel', 'approvalNotify', 'approvalViaQQ', 'qqApi', 'longTasks', 'profilePerms', 'allow'], group: ['group', 'merge', 'titleFilter', 'chat'], model: ['model', 'chatModels'], voice: ['voice'], stickers: ['stickers'], imagegen: ['imageGen'], diary: ['diary', 'qzoneSocial'], speakup: ['speakUp'], pet: [], mood: ['mood', 'memory'], song: ['song'], bili: ['bili'], douyin: ['douyin'], heybox: ['heybox'], local: ['local'], security: ['security', 'update'] }
+       const tabDirty = (id) => {
+         if (!dirty) return false
+         if (id.startsWith('ext:')) { const k = id.slice(4); return JSON.stringify((draft.ext || {})[k]) !== JSON.stringify((cfg.ext || {})[k]) }
+diff --git a/src/chat/access.js b/src/chat/access.js
+index 7960982..30b2e0e 100644
+--- a/src/chat/access.js
++++ b/src/chat/access.js
+@@ -1,6 +1,8 @@
+ // 谁能跟她说话、她在每个会话里有多大权限。纯函数。
+ 
+ /** 权限档位：full = DSH 完整工具；social = 只有 QQ 社交工具；chat = 纯聊天，没有工具。 */
++// 对外只有两档：full = 能指挥干活，social = 只能聊天。
++// 'chat' 保留是为了兼容老配置（以前的三档），面板里已经不再提供。
+ export const LEVELS = ['full', 'social', 'chat']
+ 
+ /**
+@@ -26,8 +28,15 @@ export function checkAllowed(cfg, msg) {
+ /** 这个会话用哪一档权限。群聊永远不超过 social。 */
+ export function levelFor(cfg, chat) {
+   const owner = String(cfg.ownerQQ || '')
+-  if (chat.kind === 'private' && chat.userId === owner) {
+-    return LEVELS.includes(cfg.ownerLevel) ? cfg.ownerLevel : 'full'
++  if (chat.kind === 'private') {
++    if (chat.userId === owner) return LEVELS.includes(cfg.ownerLevel) ? cfg.ownerLevel : 'full'
++    // 私聊白名单里的人走 whitelistLevel（面板「白名单的权限」），默认给能指挥干活。
++    // 白名单本身就是准入闸门；要收回来，把这一段的 return 改成 'social' 就行。
++    // 面板上的「白名单的权限」就是这个，只有两档：能指挥干活 / 只能聊天。
++    const list = (cfg.allow?.private || []).map(String)
++    if (list.includes(String(chat.userId))) {
++      return LEVELS.includes(cfg.whitelistLevel) ? cfg.whitelistLevel : 'full'
++    }
+   }
+   return 'social'
+ }
+diff --git a/src/core/config.js b/src/core/config.js
+index 671a2d7..f09d0d3 100644
+--- a/src/core/config.js
++++ b/src/core/config.js
+@@ -14,7 +14,8 @@ export const DEFAULTS = {
+   botQQ: '', // 机器人 QQ 号（向导里填）
+   ownerQQ: '', // 主人 QQ 号（向导里填）
+   ownerName: '主人',
+-  ownerLevel: 'full', // full | social | chat
++  ownerLevel: 'full', // full（能指挥干活） | social（只能聊天）
++  whitelistLevel: 'full', // 私聊白名单里那些人的档位，跟上面同一套取值
+   approvalNotify: true, // DSH 要授权时把请求发到主人私聊
+   qqApi: { enabled: true }, // 她能用 qq_api_call 调 QQ 接口：别人只能查当前群，写操作只听主人
+   approvalViaQQ: true, // 主人私聊会话要授权时，在 QQ 回复「确认」直接批准这一次
+@@ -338,6 +339,7 @@ export function normalize(raw) {
+   c.model.vision = c.model.vision === 'on' || c.model.vision === 'off' ? c.model.vision : 'auto'
+   c.setupDone = bool(c.setupDone, false)
+   c.ownerLevel = LEVELS.includes(c.ownerLevel) ? c.ownerLevel : 'full'
++  c.whitelistLevel = LEVELS.includes(c.whitelistLevel) ? c.whitelistLevel : 'full'
+   c.longTasks = bool(c.longTasks, true)
+   c.subagentBackground = bool(c.subagentBackground, false)
+   c.chatModels = normalizeChatModels(c.chatModels)

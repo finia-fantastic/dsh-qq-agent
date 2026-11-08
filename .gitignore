@@ -1,0 +1,8 @@
+# 本地配置与运行产物（含 token / QQ 号 / 日志）
+bridge.config.json
+*.log
+*.pid
+*.out
+*.err
+bridge2.pid
+欢迎*QQ*.flag
