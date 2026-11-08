@@ -30,7 +30,7 @@
 
 ## 二、目录与文件
 
-所有东西都在 `DSH_HOME` 下（本机是 `I:/dsh-home`）：
+所有东西都在 `DSH_HOME` 下（本机是 `$DSH_HOME`）：
 
 ```
 dsh-home/
