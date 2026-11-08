@@ -38,20 +38,6 @@
   "persona_file": "personas/tietou.md"
  },
  {
-  "id": "doudou",
-  "num": 472,
-  "team": "强壮组",
-  "name": "豆豆",
-  "sex": "女",
-  "tags": [
-   "强壮组",
-   "原神玩家",
-   "把一切都拐回游戏"
-  ],
-  "motive": "想抽满那个角色。她算过：十万奖金等于一百五十四个六四八。她说这个换算的时候很认真，像在报一个事实。",
-  "persona_file": "personas/doudou.md"
- },
- {
   "id": "tangtang",
   "num": 619,
   "team": "强壮组",
@@ -106,20 +92,6 @@
   ],
   "motive": "他是来给狗治病的。全场唯一一件他真正当真的事，而且他不打算让任何人知道。",
   "persona_file": "personas/laoxian.md"
- },
- {
-  "id": "laohei",
-  "num": 55,
-  "team": "聪明组",
-  "name": "老黑",
-  "sex": "男",
-  "tags": [
-   "聪明组",
-   "原黑",
-   "靠贬低别人找优越"
-  ],
-  "motive": "他说自己「就是来证明玩游戏的都是傻子」。没人问过他到底为什么来。",
-  "persona_file": "personas/laohei.md"
  },
  {
   "id": "ache",
