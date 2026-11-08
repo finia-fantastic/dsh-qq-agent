@@ -1,0 +1,55 @@
+{
+  "_说明": "这就是 aurabot 的 plugins-data/aurabot/config.json 的脱敏模板。复制到 DSH_HOME/plugins-data/aurabot/config.json 再改。真实文件里有 QQ 号，不要提交。",
+
+  "botQQ": "<机器人QQ>",
+  "ownerQQ": "<你的QQ>",
+  "ownerName": "老大",
+
+  "_权限说明": "只有两档：full=能指挥干活，social=只能聊天。群聊永远 social。",
+  "ownerLevel": "full",
+  "whitelistLevel": "full",
+
+  "model": {
+    "provider": "",
+    "model": "",
+    "reasoningEffort": "low",
+    "vision": "auto"
+  },
+
+  "allow": {
+    "_说明": "私聊白名单里的人走 whitelistLevel；群必须是白名单里的群才会回",
+    "private": ["<同事QQ1>", "<同事QQ2>"],
+    "groups": ["<群号1>"]
+  },
+
+  "memory": {
+    "enabled": true,
+    "recallCount": 6,
+    "recallMode": "always",
+    "recallTriggers": ["上次", "上回", "之前", "以前", "那天", "那次", "还记得", "记不记得", "说过", "提过", "答应", "约好", "那时候"],
+    "dailyConsolidate": true,
+    "consolidateTimes": ["04:00", "16:00"],
+    "keepChatlogDays": 7,
+    "compress": true,
+    "compressAfterDays": 14
+  },
+
+  "group": {
+    "_说明": "这组参数决定她像不像活的。maxPerHour 和 quietHours 最容易卡死活动。",
+    "wakeWords": ["<名字>", "<小名>"],
+    "interjectChance": 0.15,
+    "cooldownSec": 90,
+    "maxPerHour": 6,
+    "quietHours": [1, 8],
+    "minRecentMessages": 3,
+    "activeWindowSec": 300,
+    "interests": ["<她感兴趣的东西>"]
+  },
+
+  "_踩过的坑": [
+    "longTasks=true 时需要 dsh-tool-schedule / dsh-tool-jobs，没装会导致私聊完全不回",
+    "~/.dsh/dsh-qq/settings.json 会整块覆盖 patch，保持 {}",
+    "群消息只认 @ 或 wakeWords，不 @ 不会触发",
+    "quietHours 会让她在指定时段一句话都不说"
+  ]
+}

@@ -251,3 +251,14 @@ node bridge/memory.mjs stats        # 有多少条、攒了多少没抽
 node bridge/memory.mjs recall 关键词
 node bridge/memory.mjs consolidate  # 立刻抽一次
 ```
+
+---
+
+## 养一条鱼（）
+
+想把一个 AI 养成「住在 QQ 里的角色」，而不是一个问答机器人，看这里：
+
+- [](fish/README.md) —— 完整图纸：四层架构、目录、人格、记忆、群聊闸门、权限、复制步骤、踩过的坑
+- [](fish/config.example.json) —— 脱敏的配置模板
+
+本体照着这份就能在自己机器上复刻一条同样的鱼。
