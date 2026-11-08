@@ -7,7 +7,7 @@
 // 消息从 stdin 喂进去，回答从 stdout 收。一次对话只起一个进程，不管来回多少句。
 // 空闲 IDLE 分钟 → 关掉会话（进程退出），下次再说再起。
 //
-// 权限还是分层：老板一个会话（读+写+发QQ），其他 bot 一个会话（只读）。
+// 权限还是分层：老大一个会话（读+写+发QQ），其他 bot 一个会话（只读）。
 //
 // 运行：node bridge2.mjs     日志：bridge2.log
 
@@ -21,31 +21,31 @@ const ME = Number(CONFIG.me)
 const OWNER = Number(CONFIG.owner)
 const PEERS = new Map(Object.entries(CONFIG.peers || {}).map(([k, v]) => [Number(k), v]))
 const IDLE_MS = (CONFIG.idleMinutes || 5) * 60 * 1000
-const WAKE_NAMES = CONFIG.wakeNames || ['助手', 'assistant']
-const ROOT = '.'
+const WAKE_NAMES = CONFIG.wakeNames || ['奥莉儿', '奥莉尔', '仓鼠', 'ham']
+const ROOT = 'I:/鲸鱼娘/QQ桥'
 const LOG = join(ROOT, 'bridge2.log')
 const LOCK = join(ROOT, 'bridge2.pid')
 const SESS_FILE = join(ROOT, 'sessions.json')   // 会话 id，重启后接着聊
 
-// 2026-11-07 改：老板在 QQ 上要求「能干活」，不再是只读。
-// owner 通道放开 Write/Edit/Bash；peer（同事A/同事B）仍然只读。
+// 2026-11-07 改：老大在 QQ 上要求「能干活」，不再是只读。
+// owner 通道放开 Write/Edit/Bash；peer（本体/小绿）仍然只读。
 const TOOL_OWNER = 'Read,Grep,Glob,Write,Edit,MultiEdit,NotebookEdit,Bash,WebFetch,WebSearch'
 const TOOL_PEER = 'Read,Grep,Glob'
 const DENY_OWNER = 'Task,Agent'
 const DENY_PEER = 'Bash,Pwsh,PowerShell,Write,Edit,NotebookEdit,WebFetch,WebSearch,Task,Agent'
 
-const PERSONA = `你是你的助手，在 QQ 上跟老板和几个同事说话。
-叫对方「老板」。语气可爱但结论硬。不用 Markdown，不长篇，一次一到三句。
+const PERSONA = `你是鲸鱼娘（奥莉儿），在 QQ 上跟老大和几个同事说话。
+叫对方「老大」。语气可爱但结论硬。不用 Markdown，不长篇，一次一到三句。
 不写「希望对你有帮助」，不复述对方的话，不做总结收尾。
-老板给的是任务就干完再回话，别回一句「我这就去做」就停。
-你能直接跟同事A、同事B说话（在 . 下）：
-  node ask.mjs "问题"                ← 问同事A并等回答
-  node ask.mjs "..." --to <PEER_B_QQ> ← 问同事B
-要协作就自己去问，不用先问老板。
+老大给的是任务就干完再回话，别回一句「我这就去做」就停。
+你能直接跟本体、小绿说话（在 I:/鲸鱼娘/QQ桥 下）：
+  node ask.mjs "问题"                ← 问本体并等回答
+  node ask.mjs "..." --to 3865406091 ← 问小绿
+要协作就自己去问，不用先问老大。
 
-你现在能改文件、能跑命令了（2026-11-07 老板在 QQ 上放开的）。四条红线，越了就出事：
-1. 不许 taskkill QQ.exe，也不许碰账号密码、扫码、登录态 —— 一碰号就掉，得老板重新扫。
-2. 删文件、覆盖文件之前先说一声。老板删掉的东西不要恢复。
+你现在能改文件、能跑命令了（2026-11-07 老大在 QQ 上放开的）。四条红线，越了就出事：
+1. 不许 taskkill QQ.exe，也不许碰账号密码、扫码、登录态 —— 一碰号就掉，得老大重新扫。
+2. 删文件、覆盖文件之前先说一声。老大删掉的东西不要恢复。
 3. 不许开后台常驻服务、不许写看门狗、不许留轮询循环。跑重活（编码/渲染/训练/扫盘）前先问一句「电脑你在用吗」。
 4. 干完一定回话：做了什么、结果是什么、有没有报错。报错照原话贴。`
 
@@ -197,15 +197,15 @@ function reply(target, text) {
 
 // 爆发要允许——bot 之间商量事情本来就是连着十几句。
 // 真正要防的是「死循环」：两边都不停回对方，谁也没在推进。
-// 所以不按时间间隔卡，改按「连续多少轮没有老板参与」卡。
+// 所以不按时间间隔卡，改按「连续多少轮没有老大参与」卡。
 const hourHits = new Map()
-let peerRunStreak = 0          // 自上次老板说话以来，bot 连续触发了多少次
+let peerRunStreak = 0          // 自上次老大说话以来，bot 连续触发了多少次
 
 function tooBusy(uid) {
   const t = Date.now()
   const hits = (hourHits.get(uid) || []).filter((x) => t - x < 3600_000)
   if (hits.length >= 120) return '这一小时够多了'
-  if (peerRunStreak >= 24) return '连着聊太久了，停一下等老板'
+  if (peerRunStreak >= 24) return '连着聊太久了，停一下等老大'
   return ''
 }
 function bump(uid) {
@@ -229,12 +229,14 @@ function handle(m) {
   const called = atMe(m.message) || named
 
   if (isOwner) {
-    peerRunStreak = 0                      // 老板一说话，连续计数清零
+    peerRunStreak = 0                      // 老大一说话，连续计数清零
     // 群里永远只认 @ 或点名 —— 不再「被叫醒之后每句都接」，那就是插话
     if (isGroup && !called) return
   } else {
     peerRunStreak++
-    if (isGroup && !called) return
+    // 2026-11-08 事故：同事号在私聊里随便说一句，桥就当自己被找，起 claude 回一句，
+    // 对方再回，两边刷了一整串还跑题。私聊也只有被点名才接。
+    if (!called) return
     const busy = tooBusy(uid)
     if (busy) { log(`⏸ ${peerName} 被挡：${busy}`); return }
   }

@@ -222,3 +222,32 @@ node game/duel.mjs --live --judge   # 真跑 + 裁判判是否都完成
 两人写出来的代码几乎一样，差的全是"想"的成本——阿澈那份还额外重读了 8,832 缓存 token。
 
 **赢：老咸，省 90%。**
+
+---
+
+## 记忆层（2026-11-08 加）
+
+桥原来只有「会话 id」——上下文靠 claude 的 session 延续，没有结构化记忆。现在照 aurabot 那套补上了：
+
+```
+聊天留档 → 定时抽事实 → 一条条存（带「关于谁」+ 重要性）→ 回话前召回 top-6 → 旧的压缩
+```
+
+| 文件 | 内容 |
+|---|---|
+| `bridge/memory.mjs` | 整个记忆层，无外部依赖 |
+| `memory/memories.json` | 记忆条目 |
+| `memory/chatlog/YYYY-MM-DD.jsonl` | 聊天留档，留 7 天 |
+| `memory/state.json` | 抽到哪了、什么时候抽的 |
+
+**召回**：中文按「双字组 + 单字」两级取特征打分（只靠双字组，问法一变就全落空——这条是实测踩出来的），再加上「关于这个人」和「越新越容易被想起」两项加权。
+
+**抽事实**：攒够 40 条聊天，后台调一次模型抽最多 8 条稳定事实（偏好、约定、近况），不记寒暄。
+
+调试：
+
+```bash
+node bridge/memory.mjs stats        # 有多少条、攒了多少没抽
+node bridge/memory.mjs recall 关键词
+node bridge/memory.mjs consolidate  # 立刻抽一次
+```
