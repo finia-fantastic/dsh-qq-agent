@@ -5,7 +5,7 @@
 //   node qq.mjs history group:263836170 [条数]
 //   node qq.mjs whoami
 //
-// 默认用我的号（<BOT_QQ> / 3004）。加 --as <PEER_C_QQ> 可以换号发（比如让溯发）。
+// 默认用我的号（<BOT_QQ> / 3004）。加 --as <PEER_C_QQ> 可以换号发（比如换另一个号发）。
 import { readFileSync } from 'node:fs'
 import { createClient } from './onebot.mjs'
 
@@ -62,7 +62,7 @@ if (cmd === 'whoami') {
   node qq.mjs send <group:群号|private:QQ号> "内容"    （||| 可拆多条）
   node qq.mjs history <group:群号|private:QQ号> [条数]
   node qq.mjs whoami
-  加 --as <PEER_C_QQ> 可以换成溯的号发`)
+  加 --as <PEER_C_QQ> 可以换另一个号的账号发`)
 }
 c.close()
 process.exit(0)
