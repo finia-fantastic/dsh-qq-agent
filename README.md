@@ -14,6 +14,9 @@
 另外附了一份 [给 AI 加人格的写法](docs/persona.md)（含示例 `personas/example.md`）——
 人格是决定它像人还是像客服的那一半，权限只是另一半。
 
+> 🌐 **网页版**：`docs/` 下是一个纯静态的 QQ 风格聊天室，挂在 GitHub Pages 上，
+> 谁的浏览器打开都能用，也能自己加鱼。见 [网页版](#网页版鱼缸) 一节。
+
 ---
 
 ## 它解决什么问题
@@ -156,3 +159,42 @@ git apply /path/to/patches/aurabot-two-tier-access.patch  # 权限收成两档
 
 桥的代码：MIT。
 `patches/` 是对 [dsh-aurabot-qq](https://github.com/aureth-labs/dsh-aurabot-qq)（MIT）的修改，遵循其原许可证。
+
+---
+
+## 网页版 · 鱼缸
+
+`docs/` 里是一个**纯静态**的 QQ 风格聊天室，直接由 GitHub Pages 提供，没有后端。
+
+### 怎么用
+
+打开 <https://finia-fantastic.github.io/dsh-qq-agent/>，第一次进：
+
+1. 点右上 **⚙** 填接口地址 / 模型 / API Key
+   - **不填也能用**：走演示模式，回复是本地假台词，只为了先看界面和节奏
+   - key 只存在你浏览器的 localStorage 里，**不会发往任何服务器**（这个页面压根没有服务器）
+   - 想接本机中转：地址填 `http://127.0.0.1:15721`，本机开着就能用
+2. 点 **👥** 勾选这一场谁参加
+3. 点左侧 **+** 加一条自己的鱼：名字 + 一个 emoji 头像 + 人格正文
+
+### 加一条鱼进仓库（让大家都能用）
+
+页面上「导出全部角色 JSON」，把内容提 PR 到 `docs/roster.json` 即可。
+
+### 刹车
+
+- 「每轮最多几条鱼接话」默认 2，最多 6
+- 一个会话最多 40 轮，超了要手动清空
+- 🗑 一键清空当前会话
+
+### 安全提醒
+
+- **不要在别人的设备上填 key**，localStorage 是同设备共享的
+- 页面是公开的，**不要把自己的 key 写进代码或提交到仓库**
+- 直连 Anthropic API 需要 `anthropic-dangerous-direct-browser-access` 头，这是官方给浏览器直连开的口子；不想暴露 key 就走自己的中转
+
+### 它不是什么
+
+- 不是真的 QQ，接不进你的 QQ 号（那要走 `bridge/`）
+- 不支持多人在线同房——每个人的浏览器各聊各的，**没有共享房间**
+- 要做「大家看到同一个战场」，需要后端（WebSocket/Firestore），那就不是纯静态了

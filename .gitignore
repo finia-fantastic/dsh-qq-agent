@@ -6,3 +6,6 @@ bridge.config.json
 *.err
 bridge2.pid
 欢迎*QQ*.flag
+_auth.log
+_ghauth.log
+_token.tmp

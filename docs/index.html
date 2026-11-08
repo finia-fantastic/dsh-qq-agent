@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>鱼群 · Fish Arena</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐟</text></svg>">
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <header class="side-head">
+      <div class="me">
+        <span class="avatar me-avatar">🧑</span>
+        <div>
+          <div class="me-name" id="meName">你</div>
+          <div class="me-sub" id="connState">未连接</div>
+        </div>
+      </div>
+      <button id="btnSettings" class="icon-btn" title="设置">⚙</button>
+    </header>
+
+    <div class="search"><input id="search" placeholder="搜索会话 / 鱼"></div>
+
+    <div class="room-list">
+      <div class="section-title">群聊</div>
+      <div class="room active" data-room="group" id="roomGroup">
+        <span class="avatar">🏟</span>
+        <div class="room-main">
+          <div class="room-name">鱼缸</div>
+          <div class="room-last" id="groupLast">所有人都在这个池子里</div>
+        </div>
+      </div>
+
+      <div class="section-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>单聊</span>
+        <button id="btnAddFish" class="mini-btn" title="加一条新鱼">+</button>
+      </div>
+      <div id="fishList"></div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <header class="chat-head">
+      <div>
+        <div class="chat-title" id="chatTitle">鱼缸</div>
+        <div class="chat-sub" id="chatSub">群聊 · 谁都可以接话</div>
+      </div>
+      <div class="chat-actions">
+        <button id="btnRoster" class="icon-btn" title="这一场谁参加">👥</button>
+        <button id="btnClear" class="icon-btn" title="清空这个会话">🗑</button>
+      </div>
+    </header>
+
+    <div id="messages" class="messages"></div>
+
+    <footer class="composer">
+      <textarea id="input" rows="1" placeholder="说点什么…（Enter 发送，Shift+Enter 换行）"></textarea>
+      <button id="btnSend" class="send">发送</button>
+    </footer>
+  </main>
+</div>
+
+<!-- 设置 -->
+<dialog id="dlgSettings">
+  <form method="dialog" class="dlg">
+    <h3>连接设置</h3>
+    <p class="hint">key 只存在你这台设备的浏览器里，不会上传到任何服务器。这个网页是纯静态的，也没有服务器可传。</p>
+    <label>接口地址
+      <input id="cfgBase" placeholder="https://api.anthropic.com">
+    </label>
+    <label>模型
+      <input id="cfgModel" placeholder="claude-sonnet-5-5">
+    </label>
+    <label>API Key
+      <input id="cfgKey" type="password" placeholder="sk-ant-…（只存本地）">
+    </label>
+    <label class="row">每轮最多几条鱼接话
+      <input id="cfgBurst" type="number" min="1" max="6" step="1">
+    </label>
+    <div class="dlg-actions">
+      <button value="cancel" class="ghost">取消</button>
+      <button id="btnSaveCfg" value="save" class="primary">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- 角色名单 -->
+<dialog id="dlgRoster">
+  <div class="dlg">
+    <h3>这一场谁参加</h3>
+    <p class="hint">勾上的人会在这个群里接话。单聊不受影响。</p>
+    <div id="rosterList" class="roster"></div>
+    <div class="dlg-actions">
+      <button id="btnExportRoster" class="ghost">导出全部角色 JSON</button>
+      <button id="btnCloseRoster" class="primary">好了</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- 加鱼 -->
+<dialog id="dlgAdd">
+  <div class="dlg">
+    <h3>加一条新鱼</h3>
+    <label>名字 <input id="addName" placeholder="比如 阿澈"></label>
+    <label>头像（一个 emoji）<input id="addAvatar" maxlength="4" placeholder="🐟"></label>
+    <label>人格（写对话样本，别写形容词）
+      <textarea id="addPersona" rows="8" placeholder="你是……&#10;【说话】一次一到两句……&#10;【毛病】……&#10;【别做】……"></textarea>
+    </label>
+    <p class="hint">加完只存在你本地。想让它进仓库给大家用：点「导出全部角色 JSON」，把内容提个 PR 到 <code>web/roster.json</code>。</p>
+    <div class="dlg-actions">
+      <button id="btnCancelAdd" class="ghost">取消</button>
+      <button id="btnSaveFish" class="primary">加进去</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
