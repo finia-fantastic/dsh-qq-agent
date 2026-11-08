@@ -1,0 +1,20 @@
+# 野兽游戏 · 鱼缸版 —— DSH 接线
+#
+# 用法：挂到一个独立 profile（比如 game）上，别塞进你日常用的那个。
+#   DSH_HOME=I:/dsh-home bash ~/bin/dsh-run.sh --profile game --patch <本文件> --port 3091 --no-open
+#
+# 这两段给"本体"装上 agent-team 的九个工具：
+#   spawn_teammate / send_message / list_agents / wait_agent / interrupt_agent
+#   team_task_create / team_task_list / team_task_get / team_task_update
+#
+# ⚠️ 这两个包是 experimental，上游不保证稳定；版本升级后字段可能变。
+
+- id: agent-team
+  name: '@deepseek-ai/dsh-experimental-agent-team'
+
+- id: tool-agent-team
+  name: '@deepseek-ai/dsh-experimental-tool-agent-team'
+  config:
+    # fresh = 全新的 teammate；fork = 从当前会话分叉（会继承上下文，贵）
+    freshProvider: spawn
+    forkProvider: fork

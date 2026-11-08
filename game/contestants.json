@@ -1,0 +1,114 @@
+[
+ {
+  "id": "tietou",
+  "num": 331,
+  "team": "强壮组",
+  "name": "铁头",
+  "sex": "男",
+  "tags": [
+   "强壮组",
+   "开团",
+   "怕被真讨厌"
+  ],
+  "motive": "想开一间自己的健身房。他爸说过一句「你不行」，他一直记着。他想拿钱回去，摔在桌上。",
+  "persona_file": "personas/tietou.md"
+ },
+ {
+  "id": "paopao",
+  "num": 812,
+  "team": "强壮组",
+  "name": "泡泡",
+  "sex": "女",
+  "tags": [
+   "强壮组",
+   "话多",
+   "怕安静"
+  ],
+  "motive": "妹妹考上了国外的学校，学费还差一半。她说这件事的时候笑得很开心，像在讲别人的事。",
+  "persona_file": "personas/paopao.md"
+ },
+ {
+  "id": "tangtang",
+  "num": 619,
+  "team": "强壮组",
+  "name": "糖糖",
+  "sex": "女",
+  "tags": [
+   "强壮组",
+   "讨好",
+   "自己不重要"
+  ],
+  "motive": "想给爸妈买套房。她从来没跟人说过这事，因为她觉得自己不配提要求。",
+  "persona_file": "personas/tangtang.md"
+ },
+ {
+  "id": "xiaoman",
+  "num": 977,
+  "team": "强壮组",
+  "name": "小满",
+  "sex": "女",
+  "tags": [
+   "强壮组(被硬塞进来)",
+   "社恐",
+   "想被看见"
+  ],
+  "motive": "妈妈一个月的药六千。她来参赛没跟家里说，只说是出差。",
+  "persona_file": "personas/xiaoman.md"
+ },
+ {
+  "id": "ache",
+  "num": 406,
+  "team": "聪明组",
+  "name": "阿澈",
+  "sex": "男",
+  "tags": [
+   "聪明组",
+   "算计",
+   "怕被落下"
+  ],
+  "motive": "替家里还了四十万，还剩十七万。他不说这事，但每听到一个奖金数字，都在心里换算成「还剩几个月」。",
+  "persona_file": "personas/ache.md"
+ },
+ {
+  "id": "ageng",
+  "num": 558,
+  "team": "聪明组",
+  "name": "阿鲠",
+  "sex": "男",
+  "tags": [
+   "聪明组",
+   "不认错",
+   "心里早认了"
+  ],
+  "motive": "他不是为了钱来的。有人对他说过「你这辈子就这样了」，他要拿这个奖杯回去。",
+  "persona_file": "personas/ageng.md"
+ },
+ {
+  "id": "laoxian",
+  "num": 24,
+  "team": "聪明组",
+  "name": "老咸",
+  "sex": "男",
+  "tags": [
+   "聪明组",
+   "摆烂",
+   "有一件事很在意"
+  ],
+  "motive": "他是来给狗治病的。全场唯一一件他真正当真的事，而且他不打算让任何人知道。",
+  "persona_file": "personas/laoxian.md"
+ },
+ {
+  "id": "ahuang",
+  "num": 890,
+  "team": "聪明组",
+  "name": "阿谎",
+  "sex": "男",
+  "tags": [
+   "聪明组",
+   "整活",
+   "想让人信一次"
+  ],
+  "motive": "他说自己欠了高利贷。没人知道这是真是假——包括他自己好像也不太确定。",
+  "persona_file": "personas/ahuang.md"
+ }
+]
