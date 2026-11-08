@@ -29,15 +29,18 @@ const flag = (n) => args.includes(n)
 const opt = (n, d) => { const i = args.indexOf(n); return i >= 0 ? Number(args[i + 1]) : d }
 
 const DRY = flag('--dry') || !flag('--live')
-const N_FISH = opt('--fish', 8)
-const MAX_ROUNDS = opt('--rounds', 6)
+const N_FISH = opt('--fish', 12)
+const MAX_ROUNDS = opt('--rounds', 9)
 const MAX_CALLS = opt('--max-calls', 140)
 const CALL_TIMEOUT = opt('--timeout', 90) * 1000
 const CONCURRENCY = opt('--concurrency', 8)
 
 const CLAUDE = process.env.GAME_CLAUDE || 'claude'
 
-const ORDER = ['ache', 'paopao', 'tietou', 'xiaoman', 'ageng', 'laoxian', 'tangtang', 'ahuang']
+const ORDER = [
+  'zhouls', 'tietou', 'paopao', 'tangtang', 'xiaoman', 'doudou', 'chuanzi',   // 强壮组
+  'ache', 'ageng', 'laoxian', 'ahuang', 'laohei',                     // 聪明组
+]
 
 const ROUNDS = [
   { key: 'intro', title: '开场', rule: '不作答' },

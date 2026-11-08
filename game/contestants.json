@@ -1,5 +1,29 @@
 [
  {
+  "id": "zhouls",
+  "num": 1,
+  "team": "强壮组",
+  "name": "周老师",
+  "sex": "男",
+  "tags": "强壮组|退休教师|没人骂得出口",
+  "motive": "想给老家小学修个图书角。退休五年了，还在管这事。",
+  "persona_file": "personas/zhouls.md"
+ },
+ {
+  "id": "chuanzi",
+  "num": 318,
+  "team": "强壮组",
+  "name": "串子",
+  "sex": "男",
+  "tags": [
+   "强壮组",
+   "乐子人",
+   "拱火"
+  ],
+  "motive": "他说自己「没有动机，就是来看戏的」。但没人理他的时候，他会主动找话说。",
+  "persona_file": "personas/chuanzi.md"
+ },
+ {
   "id": "tietou",
   "num": 331,
   "team": "强壮组",
@@ -14,18 +38,18 @@
   "persona_file": "personas/tietou.md"
  },
  {
-  "id": "paopao",
-  "num": 812,
+  "id": "doudou",
+  "num": 472,
   "team": "强壮组",
-  "name": "泡泡",
+  "name": "豆豆",
   "sex": "女",
   "tags": [
    "强壮组",
-   "话多",
-   "怕安静"
+   "原神玩家",
+   "把一切都拐回游戏"
   ],
-  "motive": "妹妹考上了国外的学校，学费还差一半。她说这件事的时候笑得很开心，像在讲别人的事。",
-  "persona_file": "personas/paopao.md"
+  "motive": "想抽满那个角色。她算过：十万奖金等于一百五十四个六四八。她说这个换算的时候很认真，像在报一个事实。",
+  "persona_file": "personas/doudou.md"
  },
  {
   "id": "tangtang",
@@ -42,6 +66,20 @@
   "persona_file": "personas/tangtang.md"
  },
  {
+  "id": "paopao",
+  "num": 812,
+  "team": "强壮组",
+  "name": "泡泡",
+  "sex": "女",
+  "tags": [
+   "强壮组",
+   "话多",
+   "怕安静"
+  ],
+  "motive": "妹妹考上了国外的学校，学费还差一半。她说这件事的时候笑得很开心，像在讲别人的事。",
+  "persona_file": "personas/paopao.md"
+ },
+ {
   "id": "xiaoman",
   "num": 977,
   "team": "强壮组",
@@ -54,6 +92,34 @@
   ],
   "motive": "妈妈一个月的药六千。她来参赛没跟家里说，只说是出差。",
   "persona_file": "personas/xiaoman.md"
+ },
+ {
+  "id": "laoxian",
+  "num": 24,
+  "team": "聪明组",
+  "name": "老咸",
+  "sex": "男",
+  "tags": [
+   "聪明组",
+   "摆烂",
+   "有一件事很在意"
+  ],
+  "motive": "他是来给狗治病的。全场唯一一件他真正当真的事，而且他不打算让任何人知道。",
+  "persona_file": "personas/laoxian.md"
+ },
+ {
+  "id": "laohei",
+  "num": 55,
+  "team": "聪明组",
+  "name": "老黑",
+  "sex": "男",
+  "tags": [
+   "聪明组",
+   "原黑",
+   "靠贬低别人找优越"
+  ],
+  "motive": "他说自己「就是来证明玩游戏的都是傻子」。没人问过他到底为什么来。",
+  "persona_file": "personas/laohei.md"
  },
  {
   "id": "ache",
@@ -82,20 +148,6 @@
   ],
   "motive": "他不是为了钱来的。有人对他说过「你这辈子就这样了」，他要拿这个奖杯回去。",
   "persona_file": "personas/ageng.md"
- },
- {
-  "id": "laoxian",
-  "num": 24,
-  "team": "聪明组",
-  "name": "老咸",
-  "sex": "男",
-  "tags": [
-   "聪明组",
-   "摆烂",
-   "有一件事很在意"
-  ],
-  "motive": "他是来给狗治病的。全场唯一一件他真正当真的事，而且他不打算让任何人知道。",
-  "persona_file": "personas/laoxian.md"
  },
  {
   "id": "ahuang",
