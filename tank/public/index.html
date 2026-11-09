@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>鱼缸</title>
+<style>
+:root{--bg:#0f1216;--panel:#161b22;--line:#232a34;--ink:#e6edf3;--sub:#8b949e;--accent:#4ec9a5;--me:#1f6feb}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 "Microsoft YaHei",system-ui,sans-serif;display:flex;height:100dvh;overflow:hidden}
+aside{width:240px;flex:none;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+.side-head{padding:16px;border-bottom:1px solid var(--line)}
+.side-head h1{font-size:16px;font-weight:600}
+.side-head p{font-size:12px;color:var(--sub);margin-top:4px}
+.fish{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-left:3px solid transparent}
+.fish:hover{background:#1b222c}
+.fish.on{background:#12202a;border-left-color:var(--accent)}
+.fish .av{width:34px;height:34px;border-radius:10px;background:#1f2733;display:grid;place-items:center;font-size:18px;flex:none}
+.fish .nm{font-size:14px}
+.fish .tg{font-size:11px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+main{flex:1;display:flex;flex-direction:column;min-width:0}
+header{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+header .t{font-weight:600}
+header .s{font-size:12px;color:var(--sub)}
+.acts{display:flex;gap:8px}
+button{background:#21262d;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer}
+button:hover{background:#2b333d}
+button.primary{background:var(--accent);color:#04150f;border-color:transparent;font-weight:600}
+#log{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:12px}
+.msg{display:flex;gap:10px;max-width:min(720px,88%)}
+.msg.me{align-self:flex-end;flex-direction:row-reverse}
+.msg .body{min-width:0}
+.msg .who{font-size:12px;color:var(--sub);margin-bottom:3px}
+.msg.me .who{text-align:right}
+.bubble{background:#1b222c;border:1px solid var(--line);border-radius:12px;padding:9px 13px;white-space:pre-wrap;word-break:break-word}
+.msg.me .bubble{background:#12324a;border-color:#1d4a6b}
+.thinking .bubble{color:var(--sub);font-style:italic}
+footer{border-top:1px solid var(--line);padding:12px;display:flex;gap:10px}
+textarea{flex:1;resize:none;background:#0d1117;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;outline:none;max-height:140px}
+textarea:focus{border-color:var(--accent)}
+</style>
+</head>
+<body>
+<aside>
+  <div class="side-head">
+    <h1>鱼缸</h1>
+    <p>没有账号，只有人格文件</p>
+  </div>
+  <div id="fishList" style="flex:1;overflow:auto"></div>
+  <div style="padding:10px 14px;border-top:1px solid var(--line)">
+    <button id="btnReload" style="width:100%">重新扫描 personas/</button>
+  </div>
+</aside>
+<main>
+  <header>
+    <div><div class="t" id="roomName">鱼缸</div><div class="s" id="roomSub">全员都在</div></div>
+    <div class="acts">
+      <button id="btnAll">让全体接一句</button>
+      <button id="btnClear">清空</button>
+    </div>
+  </header>
+  <div id="log"></div>
+  <footer>
+    <textarea id="input" rows="1" placeholder="说点什么…（Enter 发送 / Shift+Enter 换行）"></textarea>
+    <button class="primary" id="btnSend">发送</button>
+  </footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
